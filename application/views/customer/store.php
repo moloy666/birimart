@@ -404,37 +404,37 @@
                     <div class="col-md-6 col-lg-4">
                         <a href="" class="storelist" data-toggle="modal" data-target="#storelist" id="Kirana" onclick="get_vendor_list(this.id)">
                             <img src="<?= base_url() ?>assets/customer/images/Groceries.png" alt="">
-                            <h3>Groceries</h3>
+                            <h3 class="">Groceries</h3>
                         </a>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist">
+                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist" id="retaurant" onclick="get_vendor_list(this.id)">
                             <img src="<?= base_url() ?>assets/customer/images/Restaurants.png" alt="">
-                            <h3>Restaurants</h3>
+                            <h3 class="">Restaurants</h3>
                         </a>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist">
+                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist" id="Medical" onclick="get_vendor_list(this.id)">
                             <img src="<?= base_url() ?>assets/customer/images/Medical-Supplies.png" alt="">
-                            <h3>Medical Supplies</h3>
+                            <h3 class="">Medical Supplies</h3>
                         </a>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist">
+                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist" id="gifts" onclick="get_vendor_list(this.id)">
                             <img src="<?= base_url() ?>assets/customer/images/Gifts.png" alt="">
-                            <h3>Gifts</h3>
+                            <h3 class="">Gifts</h3>
                         </a>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist">
+                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist" id="pet supplies" onclick="get_vendor_list(this.id)">
                             <img src="<?= base_url() ?>assets/customer/images/Pet-Supplies.png" alt="">
-                            <h3>Pet Supplies</h3>
+                            <h3 class="">Pet Supplies</h3>
                         </a>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist">
+                        <a href="" class="storelist" data-toggle="modal" data-target="#storelist" id="storewise" onclick="get_vendor_list(this.id)">
                             <img src="<?= base_url() ?>assets/customer/images/Storewise-chose.jpg" alt="">
-                            <h3>Storewise</h3>
+                            <h3 class="">Storewise</h3>
                         </a>
                     </div>
                 </div>
@@ -456,7 +456,7 @@
                         S380.852,182.3,374.212,182.3z"></path>
                         </svg>
                     </button>
-                    <big class="text-white">Groceries</big>
+                    <big class="text-white category title">Groceries</big>
                     <div class="appsrch">
                         <button class="icobtn" type="button" data-toggle="collapse" data-target="#appsrch">
                             <svg width="26" height="26" fill="#fff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 487.95 487.95" style="enable-background:new 0 0 487.95 487.95;" xml:space="preserve">
@@ -500,82 +500,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="popstrlist mb-4 shadow border" data-toggle="modal" data-target="#storelistdtls" data-dismiss="modal" aria-label="Close">
-                            <div class="d-flex align-items-center">
-                                <div class="popstrlistimg">
-                                    <img src="<?= base_url() ?>assets/customer/images/FOOD-SHOP.jpg" alt="">
-                                </div>
-                                <div class="ml-auto popstrlisttit">
-                                    <h5>Richmond Supermarket</h5>
-                                    <div class="d-flex align-items-center">
-                                        <strong>Richmond Town</strong>
-                                        <div class="ml-auto">12 mins - <span>₹90</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="popstrlist mb-4 shadow border" data-toggle="modal" data-target="#storelistdtls" data-dismiss="modal" aria-label="Close">
-                            <div class="d-flex align-items-center">
-                                <div class="popstrlistimg">
-                                    <img src="<?= base_url() ?>assets/customer/images/FOOD-SHOP.jpg" alt="">
-                                </div>
-                                <div class="ml-auto popstrlisttit">
-                                    <h5>Richmond Supermarket</h5>
-                                    <div class="d-flex align-items-center">
-                                        <strong>Richmond Town</strong>
-                                        <div class="ml-auto">12 mins - <span>₹90</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="popstrlist mb-4 shadow border" data-toggle="modal" data-target="#storelistdtls" data-dismiss="modal" aria-label="Close">
-                            <div class="d-flex align-items-center">
-                                <div class="popstrlistimg">
-                                    <img src="<?= base_url() ?>assets/customer/images/FOOD-SHOP.jpg" alt="">
-                                </div>
-                                <div class="ml-auto popstrlisttit">
-                                    <h5>Richmond Supermarket</h5>
-                                    <div class="d-flex align-items-center">
-                                        <strong>Richmond Town</strong>
-                                        <div class="ml-auto">12 mins - <span>₹90</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="popstrlist mb-4 shadow border" data-toggle="modal" data-target="#storelistdtls" data-dismiss="modal" aria-label="Close">
-                            <div class="d-flex align-items-center">
-                                <div class="popstrlistimg">
-                                    <img src="<?= base_url() ?>assets/customer/images/imagesymble.jpg" alt="">
-                                </div>
-                                <div class="ml-auto popstrlisttit">
-                                    <h5>Richmond Supermarket</h5>
-                                    <div class="d-flex align-items-center">
-                                        <strong>Richmond Town</strong>
-                                        <div class="ml-auto">12 mins - <span>₹90</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="popstrlist mb-4 shadow border" data-toggle="modal" data-target="#storelistdtls" data-dismiss="modal" aria-label="Close">
-                            <div class="d-flex align-items-center">
-                                <div class="popstrlistimg">
-                                    <img src="<?= base_url() ?>assets/customer/images/imagesymble.jpg" alt="">
-                                </div>
-                                <div class="ml-auto popstrlisttit">
-                                    <h5>Richmond Supermarket</h5>
-                                    <div class="d-flex align-items-center">
-                                        <strong>Richmond Town</strong>
-                                        <div class="ml-auto">12 mins - <span>₹90</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
+                       
                     </div>
                 </div>
                 <!--<div class="modal-footer appftr">
@@ -598,67 +523,67 @@
                         S380.852,182.3,374.212,182.3z"></path>
                         </svg>
                     </button>
-                    <big class="text-white mr-auto pl-3 storedtlshead">Godrej Nature's Basket </big>
+                    <big class="text-white mr-auto pl-3 storedtlshead store_name title">Godrej Nature's Basket </big>
 
                 </div>
                 <div class="modal-body aapbody">
                     <div class="p-3 strratingsec mb-3">
                         <div class="d-flex">
                             <div>
-                                <h4>Godrej Nature's Basket</h4>
-                                <small>Grocery Store, Belur Bazar</small>
-                                <div class="strrat d-flex align-items-center">
+                                <h4 class="store_name title">Godrej Nature's Basket</h4>
+                                <small class="store_address title">Grocery Store, Belur Bazar</small>
+                                <!-- <div class="strrat d-flex align-items-center">
 
                                     <svg fill="#ED8A19" height="14" width="14" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.867 55.867" style="enable-background:new 0 0 55.867 55.867;" xml:space="preserve">
                                         <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
-                                s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
-                                l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
-                                c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
-                                l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
-                                    </svg>
+                                    s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
+                                    l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
+                                    c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
+                                    l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
+                                        </svg>
 
                                     <svg fill="#ED8A19" height="14" width="14" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.867 55.867" style="enable-background:new 0 0 55.867 55.867;" xml:space="preserve">
-                                        <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
-                                s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
-                                l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
-                                c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
-                                l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
-                                    </svg>
+                                            <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
+                                    s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
+                                    l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
+                                    c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
+                                    l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
+                                        </svg>
 
                                     <svg fill="#ED8A19" height="14" width="14" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.867 55.867" style="enable-background:new 0 0 55.867 55.867;" xml:space="preserve">
-                                        <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
-                                s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
-                                l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
-                                c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
-                                l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
-                                    </svg>
+                                            <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
+                                    s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
+                                    l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
+                                    c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
+                                    l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
+                                        </svg>
 
                                     <svg fill="#ED8A19" height="14" width="14" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.867 55.867" style="enable-background:new 0 0 55.867 55.867;" xml:space="preserve">
-                                        <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
-                                s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
-                                l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
-                                c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
-                                l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
-                                    </svg>
+                                            <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
+                                    s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
+                                    l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
+                                    c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
+                                    l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
+                                        </svg>
 
                                     <svg fill="#fff" height="14" width="14" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.867 55.867" style="enable-background:new 0 0 55.867 55.867;" xml:space="preserve">
-                                        <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
-                                s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
-                                l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
-                                c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
-                                l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
+                                            <path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
+                                    s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
+                                    l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
+                                    c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
+                                    l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z" />
                                     </svg>
 
                                     <small class="ml-2">(5 Review)</small>
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="strratingtm ml-auto align-self-end"><strong>30 mins<span> - ₹25</span></strong></div>
+                            <!-- <div class="strratingtm ml-auto align-self-end"><strong>30 mins<span> - ₹25</span></strong></div> -->
                         </div>
                     </div>
 
                     <div class="pt-3 shadow bg-white">
                         <small class="d-block px-3">Items</small>
-                        <div class="storeitmwrp">
+                        <div class="storeitmwrp" id="vendor_product_list">
 
                             <div class="storeitm px-3">
                                 <div class="d-flex align-items-center">
@@ -680,25 +605,8 @@
                                 </div>
                             </div>
                             
-                            <div class="storeitm px-3">
-                                <div class="d-flex align-items-center">
-                                    <div class="dotbult"></div>
-                                    <h5 class="pl-2">Deo</h5>
-                                    <div class="qutyround d-flex align-items-center ml-auto qty-input">
-                                        <button class="qty-count qty-count--minus" data-action="minus">
-                                            <svg viewBox="0 0 409.6 409.6">
-                                                <path d="M392.533,187.733H17.067C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h375.467 c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z" />
-                                            </svg>
-                                        </button>
-                                        <input class="product-qty" type="number" name="product-qty" min="1" max="1000" value="1">
-                                        <button class="qty-count qty-count--add" data-action="add">
-                                            <svg viewBox="0 0 426.66667 426.66667">
-                                                <path d="m405.332031 192h-170.664062v-170.667969c0-11.773437-9.558594-21.332031-21.335938-21.332031-11.773437 0-21.332031 9.558594-21.332031 21.332031v170.667969h-170.667969c-11.773437 0-21.332031 9.558594-21.332031 21.332031 0 11.777344 9.558594 21.335938 21.332031 21.335938h170.667969v170.664062c0 11.777344 9.558594 21.335938 21.332031 21.335938 11.777344 0 21.335938-9.558594 21.335938-21.335938v-170.664062h170.664062c11.777344 0 21.335938-9.558594 21.335938-21.335938 0-11.773437-9.558594-21.332031-21.335938-21.332031zm0 0" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        
+
                             <div class="bg-light px-3 py-3 mt-2 text-info border-top" data-toggle="collapse" data-target="#stradditm">
                                 + Add Item
                             </div>

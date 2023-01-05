@@ -165,6 +165,7 @@ define('table_brand','brand');
 define('table_products', 'products');
 define('table_product_images', 'product_images');
 define('table_system_preferance', 'system_preferance');
+define('table_products_all_master', 'products_all_master');
 ////////////////////////////////////////
 define('param_id','id');
 define('param_mobile','mobile');

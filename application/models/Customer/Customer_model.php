@@ -692,7 +692,13 @@ class Customer_model extends CI_Model
     }
 
     public function get_vendor_product_list($vendor_id){
-        $this->db->select('p.uid as product_id. p.master_product_id as master_id');
+        $query = $this->db->select('p.uid as product_id, p.master_product_id as master_id, p.brand_id, m.name as product_name')
+        ->from(table_products.' as p')
+        ->join(table_products_all_master. ' as m', 'p.master_product_id=m.uid')
+        ->where('vendor_id', $vendor_id)->get();
+        $query = $query->result_array();
+        return(!empty($query))?$query:[];
+
     }
  
 }

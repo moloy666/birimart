@@ -158,7 +158,7 @@
                 console.log(response);
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 if (response.success) {
                     var data = response.data;
 

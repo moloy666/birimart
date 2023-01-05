@@ -184,6 +184,7 @@ class Customer extends CI_Controller
         $this->load->view('customer/shop');
         $this->load->view('customer/inc/footer');
         $this->load->view('customer/inc/footer_link');
+        // $this->load->view('customer/inc/custom_js/shop_js');
         $this->load->view('customer/inc/custom_js/cart_js');
         
     }
@@ -239,6 +240,18 @@ class Customer extends CI_Controller
         $this->load->view('customer/inc/custom_js/cart_js');
         $this->load->view('customer/inc/custom_js/store_js');
 
+    }
+
+    public function view_store_product($vendor_id){
+        $header_data["meta_title"] = "Store Wise | Bikrimart ";
+
+        $this->load->view('customer/inc/header_link', $header_data);
+        $this->load->view('customer/inc/header');
+        $this->load->view('customer/inc/sidebar');
+        $this->load->view('customer/shop');
+        $this->load->view('customer/inc/footer');
+        $this->load->view('customer/inc/footer_link');
+        $this->load->view('customer/inc/custom_js/cart_js');
     }
     
     public function view_restaurant(){

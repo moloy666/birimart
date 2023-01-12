@@ -10,7 +10,7 @@
                 console.log(response);
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 if (category_id == 'Kirana') {
                     $('.category').text('Groceries');
 
@@ -29,7 +29,7 @@
 
                         <div class="d-flex align-items-center" id="${data.vendor_id}" onclick="get_vendor_product_list(this.id, '${data.store_name}', '${data.address}')">
                             <div class="popstrlistimg">
-                                <img src="<?= base_url() ?>${data.front_image}" alt="">
+                                <img src="<?= base_url() ?>${data.front_image.path}" alt="">
                             </div>
                             <div class="ml-auto popstrlisttit">
                                 <h5 class="title">${data.store_name}</h5>
@@ -62,9 +62,14 @@
         });
     }
 
-    function display_vedor_product(vendor_id){
-        location.href=`<?=base_url(PANEL_CUSTOMER.'/store/products/')?>${vendor_id}`;
+    function display_vedor_product(e, vendor_id) {
+
+        location.href = `<?= base_url('store/products/') ?>${vendor_id}`;
+
     }
+
+
+   
 
 
     // function get_vendor_product_list(vendor_id, store_name, address) {

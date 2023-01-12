@@ -67,12 +67,12 @@ $route['customer/address/details'] = 'Customer/view_detail_deliver_address';
 
 $route['shop'] = 'Customer/View_shop';
 $route['store'] = 'Customer/View_store';
-$route['store/products'] = 'Customer/View_store_product';
-
-
 $route['restaurant'] = 'Customer/View_restaurant';
 
+$route['store/products/(:any)'] = 'Customer/View_store_product/$1';
 $route['products/(:any)'] = 'Customer/view_product_details/$1';
+
+
 
 
 

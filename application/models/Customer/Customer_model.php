@@ -122,23 +122,52 @@ class Customer_model extends CI_Model
 
     /////////////////////////// Shop ////////////////////////////////////////
 
-    public function display_product_for_shop()
+    public function display_product_for_shop($vendor_id, $pageSize = 10, $pageNo = 0)
     {
-
-        $this->db->select('m.uid as master_id, m.name as product_name, p.uid as product_id,  p.sale_price as product_price, p.vendor_id, p.weight, p.discount, ul.short_name, b.name as brand_name');
+      
+        $this->db->select('m.uid as master_id, m.name as product_name, p.uid as product_id,  p.sale_price as product_price, p.vendor_id, p.weight, p.discount, ul.short_name, b.name as brand_name, p.brand_id');
         $this->db->from('products as p');
         $this->db->join('unit_lists as ul', 'ul.uid = p.product_unit_id');
         $this->db->join('products_all_master as m', 'm.uid = p.master_product_id');
         $this->db->join('brand as b', 'b.uid = p.brand_id');
+        $this->db->limit($pageSize, (intval($pageNo) * intval($pageSize)));
+
+        if(!empty($vendor_id)){
+            $this->db->where('p.vendor_id', $vendor_id);
+        }
+
         $query = $this->db->get();
         $query = $query->result_array();
+        
+        if(!empty($vendor_id)){
+            $total_product = $this->db->from(table_products)->where('vendor_id', $vendor_id)->count_all_results();
+        }
+        else{
+            $total_product = $this->db->from(table_products)->count_all_results();
+        }
+
+        $total_pages = ceil($total_product / intval($pageSize));
+
 
         foreach ($query as $i => $val) {
             $query[$i]['sale_price'] = $val['product_price'] - (($val['product_price'] * $val['discount']) / 100);
             $product_id = $val['product_id'];
             $query[$i]['path'] = $this->get_product_image($product_id);
         }
-        return (!empty($query)) ? $query : null;
+
+        $pagination_data = [
+            'pageSize' => $pageSize,
+            'pageNo' => $pageNo,
+            "totalElements" => $total_product,
+            "totalPages" =>  $total_pages ,
+        ];
+
+        // $query['pagination_data'] = $pagination_data;
+
+        $array['data'] = $query;
+        $array['pagination_data']=$pagination_data;
+        
+        return (!empty($array)) ? $array : null;
     }
 
     public function get_product_image($product_id)
@@ -151,9 +180,9 @@ class Customer_model extends CI_Model
         return (!empty($query)) ? $query[0]['path'] : null;
     }
 
-    public function check_product_exist($customer_id, $product_id, $vendor_id, $table)
+    public function check_product_exist($customer_id, $product_id, $vendor_id, $brand_id, $table)
     {
-        $this->db->where(['customer_id' => $customer_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id]);
+        $this->db->where(['customer_id' => $customer_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id, 'brand_id'=>$brand_id]);
         $this->db->get($table);
         return ($this->db->affected_rows() == 1) ? true : false;
     }
@@ -168,40 +197,41 @@ class Customer_model extends CI_Model
         return (!empty($query)) ? $query[0][field_uid] : null;
     }
 
-    public function update_cart_item($customer_id, $product_id, $product_qty, $vendor_id)
+    public function update_cart_item($customer_id, $product_id, $product_qty, $vendor_id, $brand_id)
     {
         $data = [
             "product_qty" => $product_qty,
             "modified_at" => date(field_date)
         ];
-        $this->db->where(['customer_id' => $customer_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id]);
+        $this->db->where(['customer_id' => $customer_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id, 'brand_id'=>$brand_id]);
         $this->db->update('cart_items', $data);
         return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function update_cart_item_from_session($cart_id, $customer_id, $product_id, $product_qty, $vendor_id)
+    public function update_cart_item_from_session($cart_id, $customer_id, $product_id, $product_qty, $vendor_id, $brand_id)
     {
         $data = [
             "product_qty" => $product_qty,
             "modified_at" => date(field_date)
         ];
-        $this->db->where(['customer_id' => $customer_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id]);
+        $this->db->where(['customer_id' => $customer_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id, 'brand_id' => $brand_id]);
         $update = $this->db->update('cart_items', $data);
         if ($update) {
-            $this->db->where(['cart_id' => $cart_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id]);
+            $this->db->where(['cart_id' => $cart_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id, 'brand_id' => $vendor_id]);
             $this->db->delete('session_cart_item');
             return ($this->db->affected_rows() == 1) ? true : false;
         }
     }
 
 
-    public function insert_cart_item($cart_id, $customer_id, $product_id, $master_id, $product_qty, $vendor_id)
+    public function insert_cart_item($cart_id, $customer_id, $product_id, $master_id, $product_qty, $vendor_id, $brand_id)
     {
         $data = [
             "uid" => $cart_id,
             "customer_id" => $customer_id,
             "product_id" => $product_id,
             "master_id" => $master_id,
+            "brand_id" => $brand_id,
             "product_qty" => $product_qty,
             "vendor_id" => $vendor_id,
             "created_at" => date(field_date),
@@ -211,13 +241,14 @@ class Customer_model extends CI_Model
         return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function insert_cart_item_from_session($cart_id, $customer_id,  $master_id, $product_id, $product_qty, $vendor_id)
+    public function insert_cart_item_from_session($cart_id, $customer_id,  $master_id, $product_id, $product_qty, $vendor_id, $brand_id)
     {
         $data = [
             "uid"         => $cart_id,
             "customer_id" => $customer_id,
             "product_id"  => $product_id,
             "master_id"   => $master_id,
+            "brand_id"   => $brand_id,
             "product_qty" => $product_qty,
             "vendor_id"   => $vendor_id,
             "created_at"  => date(field_date),
@@ -231,31 +262,32 @@ class Customer_model extends CI_Model
         }
     }
 
-    public function check_session_product_exist($session_id, $product_id, $vendor_id, $table)
+    public function check_session_product_exist($session_id, $product_id, $vendor_id, $brand_id, $table)
     {
-        $this->db->where(['uid' => $session_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id]);
+        $this->db->where(['uid' => $session_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id, 'brand_id'=>$brand_id]);
         $this->db->get($table);
         return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function update_session_cart_item($session_id, $product_id, $product_qty, $vendor_id)
+    public function update_session_cart_item($session_id, $product_id, $product_qty, $vendor_id, $brand_id)
     {
         $data = [
             "product_qty" => $product_qty,
             "modified_at" => date(field_date)
         ];
-        $this->db->where(['uid' => $session_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id]);
+        $this->db->where(['uid' => $session_id, 'product_id' => $product_id, 'vendor_id' => $vendor_id, 'brand_id'=>$brand_id]);
         $this->db->update('session_cart_item', $data);
         return ($this->db->affected_rows() == 1) ? true : false;
     }
 
-    public function insert_session_cart_item($session_id, $cart_id, $product_id, $master_id, $product_qty, $vendor_id)
+    public function insert_session_cart_item($session_id, $cart_id, $product_id, $master_id, $product_qty, $vendor_id, $brand_id)
     {
         $data = [
             "uid" => $session_id,
             "cart_id" => $cart_id,
             "product_id" => $product_id,
             "master_id" => $master_id,
+            "brand_id" => $brand_id,
             "product_qty" => $product_qty,
             "vendor_id" => $vendor_id,
             "created_at" => date(field_date),
@@ -450,7 +482,7 @@ class Customer_model extends CI_Model
 
     public function display_product_details($product_id)
     {
-        $this->db->select('m.name as product_name, m.uid as master_id, p.uid as product_id, p.vendor_id, p.sale_price as product_price, p.discount, p.description, p.opening_stock, p.min_stock_qty, p.weight, ul.short_name, b.name as brand_name');
+        $this->db->select('m.name as product_name, m.uid as master_id, p.uid as product_id, p.vendor_id, p.sale_price as product_price, p.discount, p.description, p.opening_stock, p.min_stock_qty, p.weight, ul.short_name, b.name as brand_name, p.brand_id');
         $this->db->from('products_all_master as m');
         $this->db->join('products as p', 'p.master_product_id=m.uid');
         $this->db->join('unit_lists as ul', 'ul.uid=p.product_unit_id');
@@ -649,10 +681,18 @@ class Customer_model extends CI_Model
         return (!empty($query)) ? $query[0]['master_product_id'] : null;
     }
 
-    public function list_all_vendors($master_id)
+    public function get_brand_id_by_product_id($product_id){
+        $query = $this->db->select('brand_id')->where('uid', $product_id)->get(table_products);
+        $query = $query->result_array();
+        return(!empty($query))?$query[0]['brand_id']:0;
+    }
+
+    public function list_all_vendors($master_id, $brand_id)
     {
         $query = $this->db->select('vendor_id')
-        ->where('master_product_id', $master_id)->get(table_products);
+        ->where('master_product_id', $master_id)
+        // ->where('brand_id', $brand_id)
+        ->get(table_products);
         $query = $query->result_array();
         foreach ($query as $i => $val) {
             $vendor_id = $val['vendor_id'];
@@ -668,28 +708,39 @@ class Customer_model extends CI_Model
 
     public function get_vendor_details_by_id($vendor_id, $master_id)
     {
-        $query = $this->db->select('AVG(vr.ratings) as rating, u.name, u.mobile, u.email, v.uid as vendor_id, ROUND(p.sale_price - (p.sale_price * p.discount)/100)as price')
+        $query = $this->db->select('AVG(vr.ratings) as rating, u.name, u.mobile, u.email, v.uid as vendor_id, ROUND(p.sale_price - (p.sale_price * p.discount)/100)as price, v.name as store_name, v.mobile as bussiness_mobile')
             ->from(table_users . ' as u')
             ->join(table_vendor . ' as v', 'u.uid=v.user_id')
             ->join('vendor_ratings as vr', 'v.uid=vr.vendor_id')
             ->join(table_products . ' as p', 'vr.vendor_id=p.vendor_id')
             ->where(['p.vendor_id' => $vendor_id, 'p.master_product_id' => $master_id])
+            ->where_not_in('u.status', const_deleted)
             ->get();
         $query = $query->result_array();
         return (!empty($query)) ? $query[0] : [];
     }
 
     public function get_all_vendor_list($category_id){
-        $query = $this->db->select('u.uid as user_id, u.name, v.uid as vendor_id, v.name as store_name, v.mobile, v.email, v.address, v.building, d.kyc_image, d.front_image, d.inside_image')
+        $query = $this->db->select('u.uid as user_id, u.name, v.uid as vendor_id, v.name as store_name, v.mobile, v.email, v.address, v.building')
         ->from(table_users.' as u')
         ->join(table_vendor.' as v', 'u.uid=v.user_id')
-        ->join(table_documents.' as d', 'u.uid=d.user_id')
-        // ->join('vendor_ratings as vr', 'v.uid = vr.vendor_id', 'outer left') , AVG(vr.ratings) as rating
-        ->where('u.status', const_active)
+        ->where_not_in('u.status', const_deleted)
         ->like('v.bussiness_category', $category_id)->get();
         $query = $query->result_array();
+
+        foreach($query as $i=>$val){
+            $query[$i]['front_image'] = $this->get_store_image_by_user_id($val['user_id']);
+        }
         return(!empty($query))?$query:[];
     }
+
+    public function get_store_image_by_user_id($user_id){
+        $query = $this->db->select('path')
+        ->where([field_user_id => $user_id, field_name =>'front_image'])->get(table_document_new);
+        $query = $query->result_array();
+        return (!empty($query))?$query[0]:[];
+    }
+
 
     public function get_vendor_product_list($vendor_id){
         $query = $this->db->select('p.uid as product_id, p.master_product_id as master_id, p.brand_id, m.name as product_name')

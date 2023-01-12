@@ -13,7 +13,7 @@
     });
 
 
-    function buy_now(element, sale_price, product_id, master_id, vendor_id) {
+    function buy_now(element, sale_price, product_id, master_id, vendor_id, brand_id) {
 
         let qty = $('.product_qty').val();
         let product_qty = 0;
@@ -40,6 +40,7 @@
                 "product_id": product_id,
                 "master_id": master_id,
                 "vendor_id": vendor_id,
+                "brand_id":brand_id,
                 "session_id": session_id,
             },
             error: function(response) {
@@ -61,7 +62,13 @@
         localStorage.setItem("session_id", session_id);
     }
 
-    //////// Add or remove quantity of product /////////
+    function change_vendor_of_selected_product(selected_vendor_id, master_id){
+        console.log(master_id);
+        let vendor_id = 'VENDOR_'+selected_vendor_id;
+        $('#checked_vendor_id').val(vendor_id);
+    }
+
+
 
     
 

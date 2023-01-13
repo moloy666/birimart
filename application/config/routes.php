@@ -51,12 +51,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // $route['default_controller'] = 'welcome';
 
-$route['default_controller'] = 'customer';
+// $route['default_controller'] = 'customer';
+
+$route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 ///////////////////// Customer route start ///////////////////////////
 
+
+$route['home'] = 'Frontend/Product_List';
+$route['shop'] = 'Frontend/Product_List/View_shop';
+$route['store'] = 'Frontend/Product_List/View_store';
+
+
+$route['store/products/(:any)'] = 'Frontend/Product_List/View_store_product/$1';
+$route['products/(:any)'] = 'Frontend/Product_List/view_product_details/$1';
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////
 $route['customer/welcome'] = 'Customer/view_welcome';
 $route['customer/send_otp'] = 'Customer/view_send_otp';
 $route['customer/verify'] = 'Customer/view_verify_otp';
@@ -65,18 +86,14 @@ $route['customer/details'] = 'Customer/view_add_name_address';
 $route['customer/address'] = 'Customer/view_add_deliver_address';
 $route['customer/address/details'] = 'Customer/view_detail_deliver_address';
 
-$route['shop'] = 'Customer/View_shop';
-$route['store'] = 'Customer/View_store';
+// $route['shop'] = 'Customer/View_shop';
+// $route['store'] = 'Customer/View_store';
+
 $route['restaurant'] = 'Customer/View_restaurant';
 
-$route['store/products/(:any)'] = 'Customer/View_store_product/$1';
-$route['products/(:any)'] = 'Customer/view_product_details/$1';
+// $route['store/products/(:any)'] = 'Customer/View_store_product/$1';
+// $route['products/(:any)'] = 'Customer/view_product_details/$1';
 $route['vendor/products/(:any)'] = 'Customer/view_product_details/$1';
-
-
-
-
-
 
 
 ////////////////////// Vendor Routes start ///////////////////////////////

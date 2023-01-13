@@ -61,12 +61,14 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['home'] = 'Frontend/Product_List';
-$route['shop'] = 'Frontend/Product_List/View_shop';
-$route['store'] = 'Frontend/Product_List/View_store';
+$route['shop'] = 'Frontend/Product_List/view_shop';
+$route['store'] = 'Frontend/Product_List/view_store';
+$route['restaurant'] = 'Frontend/Product_List/view_restaurant';
 
 
-$route['store/products/(:any)'] = 'Frontend/Product_List/View_store_product/$1';
 $route['products/(:any)'] = 'Frontend/Product_List/view_product_details/$1';
+$route['vendor/products/(:any)'] = 'Frontend/Product_List/view_product_details/$1';
+$route['store/products/(:any)'] = 'Frontend/Product_List/view_store_product/$1';
 
 
 
@@ -88,12 +90,10 @@ $route['customer/address/details'] = 'Customer/view_detail_deliver_address';
 
 // $route['shop'] = 'Customer/View_shop';
 // $route['store'] = 'Customer/View_store';
-
-$route['restaurant'] = 'Customer/View_restaurant';
-
+// $route['restaurant'] = 'Customer/View_restaurant';
 // $route['store/products/(:any)'] = 'Customer/View_store_product/$1';
 // $route['products/(:any)'] = 'Customer/view_product_details/$1';
-$route['vendor/products/(:any)'] = 'Customer/view_product_details/$1';
+// $route['vendor/products/(:any)'] = 'Customer/view_product_details/$1';
 
 
 ////////////////////// Vendor Routes start ///////////////////////////////

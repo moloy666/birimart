@@ -52,6 +52,19 @@ class Product_List extends CI_Controller
         $this->load->view('customer/inc/custom_js/header_js');
     }
 
+    public function view_restaurant()
+    {
+        $header_data["meta_title"] = "Restaurant | Bikrimart ";
+
+        $this->load->view('customer/inc/header_link', $header_data);
+        $this->load->view('customer/inc/header');
+        $this->load->view('customer/inc/sidebar');
+        $this->load->view('customer/restaurant');
+        $this->load->view('customer/inc/footer');
+        $this->load->view('customer/inc/footer_link');
+        $this->load->view('customer/inc/custom_js/cart_js');
+    }
+
     public function view_shop()
     {
         $header_data["meta_title"] = "Shop | Bikrimart ";

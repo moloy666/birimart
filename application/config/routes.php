@@ -71,6 +71,7 @@ $route['restaurant'] = 'Customer/View_restaurant';
 
 $route['store/products/(:any)'] = 'Customer/View_store_product/$1';
 $route['products/(:any)'] = 'Customer/view_product_details/$1';
+$route['vendor/products/(:any)'] = 'Customer/view_product_details/$1';
 
 
 

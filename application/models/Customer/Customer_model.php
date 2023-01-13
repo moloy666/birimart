@@ -459,7 +459,7 @@ class Customer_model extends CI_Model
         $this->db->where('product_qty > ', 0);
         $query = $this->db->get('cart_items');
         $query = $query->result_array();
-        return $query;
+        return (!empty($query))?$query:null;
     }
 
     public function get_user_session_cart_product_id($session_id)
@@ -497,7 +497,8 @@ class Customer_model extends CI_Model
             $query[$i]['path'] = $this->get_product_image($product_id);
         }
 
-        return (!empty($query)) ? $query : [];
+        // return (!empty($query)) ? $query : [];
+        return (!empty($query)) ? $query[0] : [];
     }
 
     public function display_product_image($product_id)
@@ -750,6 +751,15 @@ class Customer_model extends CI_Model
         $query = $query->result_array();
         return(!empty($query))?$query:[];
 
+    }
+
+    public function get_product_details_by_vendor_id($vendor_id, $master_id){
+        $query = $this->db->select(field_uid.' as product_id')
+        ->where([field_vendor_id=>$vendor_id, 'master_product_id'=>$master_id])
+        ->get(table_products);
+        $query = $query->result_array();
+       
+        return (!empty($query)) ? $query[0]['product_id']: [];
     }
  
 }

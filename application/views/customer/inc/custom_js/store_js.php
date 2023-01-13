@@ -10,7 +10,7 @@
                 console.log(response);
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 if (category_id == 'Kirana') {
                     $('.category').text('Groceries');
 

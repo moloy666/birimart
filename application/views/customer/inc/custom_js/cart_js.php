@@ -1,16 +1,16 @@
 <script>
-    // display_shop_product();
     display_product_price();
     display_cart_items();
     display_delivery_charges();
 
     var pageSize;
     var pageNo;
+    var productDetailsUrl;
     var vendorId = $('#vendor_id').val();
 
     $(document).ready(function() {
-        pageSize = 10;
-        pageNo = 0;
+        pageSize = '<?= const_page_size ?>';
+        pageNo = '<?= const_page_no ?>';
 
         display_shop_product(pageSize, pageNo, vendorId);
 
@@ -20,7 +20,9 @@
     function display_shop_product(pageSize, pageNo, vendorId) {
         if (vendorId == undefined) {
             vendorId = '';
-            var url = '';
+            productDetailsUrl = '<?= base_url('products/') ?>';
+        } else {
+            productDetailsUrl = '<?= base_url('vendor/products/') ?>';
         }
 
         // console.log(vendorId);
@@ -44,17 +46,17 @@
                         }
                         details = `
                     
-                    <div class="prodlist mb-3 p-2 shadow-sm">
+                     <div class="prodlist mb-3 p-2 shadow-sm">
                                 <div class="row row5">
                                     <div class="col-3 col-lg-12 mb-2 product_image">
-                                        <a href="<?= base_url('products/') ?>${data.product_id}" class="prodlistimg d-block">
+                                        <a href="${productDetailsUrl}${data.product_id}" class="prodlistimg d-block">
                                             <img src="<?= base_url() ?>${data.path}" alt="" class="w-100">
                                         </a>
                                     </div>
                                     <div class="col-9 col-lg-12">
                                             
                                         <div class="prodlistcon">
-                                            <a href="<?= base_url('products/') ?>${data.product_id}">
+                                            <a href="${productDetailsUrl}/${data.product_id}">
                                                 <h4 class="mb-2 title">${data.brand_name} ${data.product_name}</h4>
                                             </a>
                                             
@@ -119,7 +121,7 @@
                                     </div>
                                 </div>
                             </div>
-                    `;
+                            `;
                         $('#display_products').append(details);
                     });
                     get_user_cart_product();
@@ -155,15 +157,6 @@
 
     function add_product_to_cart(product_qty, product_id, master_id, vendor_id, brand_id) {
 
-        // let selected_vendor_id= '';
-        // let checked_vendor_id = $('#checked_vendor_id').val();
-        // if(checked_vendor_id ==''){
-        //     selected_vendor_id = vendor_id;        // default vendor of a product
-        // }
-        // else{
-        //     selected_vendor_id = checked_vendor_id;    // vendor selected by customer
-        // }
-
         let session_id = '';
         if (localStorage.getItem("session_id") && localStorage.getItem("session_id") != 'undefined') {
             session_id = localStorage.getItem("session_id");
@@ -178,7 +171,7 @@
                 "qty": product_qty,
                 "product_id": product_id,
                 "master_id": master_id,
-                "vendor_id": vendor_id, 
+                "vendor_id": vendor_id,
                 "brand_id": brand_id,
                 "session_id": session_id,
             },
@@ -250,7 +243,6 @@
                 // console.log(response);
                 if (response.success) {
                     display_product_price();
-                    display_shop_product();
                     display_cart_items();
                     display_delivery_charges();
 
@@ -279,14 +271,17 @@
             success: function(response) {
                 // console.log(response);
                 if (response.success) {
-                    display_shop_product();
+
+                    $('.btn_wrapper').removeClass('bought');
+
+                    get_user_cart_product();
+
                     display_product_price();
                     display_cart_items();
                     display_delivery_charges();
 
                     // mobile view
                     display_cart_items_mobile();
-
                     $('.product_qty').val(0); // for product details page
                 }
             }
@@ -315,14 +310,19 @@
             },
             success: function(response) {
                 // console.log(response);
-                var data = response.data;
-                $.each(data, function(i, data) {
+                if (response.success) {
+                    let data = response.data;
+                    $.each(data, function(i, data) {
 
-                    $('.default_btn_' + data.product_id).addClass('bought');
+                        $('.default_btn_' + data.product_id).addClass('bought');
+                        $('.quantity_' + data.product_id).val(data.product_qty);
+                        $('.mobile_quantity_' + data.product_id).val(data.product_qty);
+                    });
+                } else {
+                    
+                }
 
-                    $('.quantity_' + data.product_id).val(data.product_qty);
-                    $('.mobile_quantity_' + data.product_id).val(data.product_qty);
-                });
+
             }
         })
     }

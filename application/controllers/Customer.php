@@ -674,12 +674,22 @@ class Customer extends CI_Controller
             $this->init_customer_model();
             $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
             $data = $this->Customer_model->get_user_cart_product_id($customer_id);
-            $this->response(["success" => true, "message" => "Details found", "data" => $data], 200);
+            if(!empty($data)){
+                $this->response(["success" => true, "message" => "Details found", "data" => $data], 200);
+            }
+            else{
+                $this->response(["success" => false, "message" => "Details not found"], 200);
+            }
         } else {
             $session_id = $this->input->post('session_id');
             $this->init_customer_model();
             $data = $this->Customer_model->get_user_session_cart_product_id($session_id);
-            $this->response(["success" => true, "message" => "Details found", "data" => $data], 200);
+            if(!empty($data)){
+                $this->response(["success" => true, "message" => "Details found", "data" => $data], 200);
+            }
+            else{
+                $this->response(["success" => false, "message" => "Details not found"], 200);
+            }
         }
     }
 
@@ -921,5 +931,19 @@ class Customer extends CI_Controller
         } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
+    }
+
+    public function get_product_details_by_vendor_id(){
+        $master_id = $this->input->post('master_id');
+        $vendor_id = $this->input->post('vendor_id');
+        $this->init_customer_model();
+        $data = $this->Customer_model->get_product_details_by_vendor_id($vendor_id, $master_id);
+        if(!empty($data)){
+            $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+        }
+        else{
+            $this->response(["success" => false, "message" => "not found"], 200);
+        }
+
     }
 }

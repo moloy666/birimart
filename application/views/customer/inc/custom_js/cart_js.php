@@ -18,7 +18,10 @@
 
 
     function display_shop_product(pageSize, pageNo, vendorId) {
-        if (vendorId == undefined) vendorId = '';
+        if (vendorId == undefined) {
+            vendorId = '';
+            var url = '';
+        }
 
         // console.log(vendorId);
 
@@ -152,14 +155,14 @@
 
     function add_product_to_cart(product_qty, product_id, master_id, vendor_id, brand_id) {
 
-        let selected_vendor_id= '';
-        let checked_vendor_id = $('#checked_vendor_id').val();
-        if(checked_vendor_id ==''){
-            selected_vendor_id = vendor_id;        // default vendor of a product
-        }
-        else{
-            selected_vendor_id = checked_vendor_id;    // vendor selected by customer
-        }
+        // let selected_vendor_id= '';
+        // let checked_vendor_id = $('#checked_vendor_id').val();
+        // if(checked_vendor_id ==''){
+        //     selected_vendor_id = vendor_id;        // default vendor of a product
+        // }
+        // else{
+        //     selected_vendor_id = checked_vendor_id;    // vendor selected by customer
+        // }
 
         let session_id = '';
         if (localStorage.getItem("session_id") && localStorage.getItem("session_id") != 'undefined') {
@@ -175,7 +178,7 @@
                 "qty": product_qty,
                 "product_id": product_id,
                 "master_id": master_id,
-                "vendor_id": selected_vendor_id, 
+                "vendor_id": vendor_id, 
                 "brand_id": brand_id,
                 "session_id": session_id,
             },

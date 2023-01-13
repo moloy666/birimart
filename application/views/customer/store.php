@@ -495,7 +495,7 @@
                                     <h5>Richmond Supermarket</h5>
                                     <div class="d-flex align-items-center">
                                         <strong>Richmond Town</strong>
-                                        <div class="ml-auto">12 mins - <span>₹90</span></div>
+                                        <!-- <div class="ml-auto">12 mins - <span>₹90</span></div> -->
                                     </div>
                                 </div>
                             </div>

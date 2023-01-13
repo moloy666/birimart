@@ -76,7 +76,7 @@ class Customer extends CI_Controller
 
     public function view_send_otp()
     {
-        $header_data['meta_title']='Sign In | Bikrimart';
+        $header_data['meta_title'] = 'Sign In | Bikrimart';
         $this->load->view('customer/inc/header_link', $header_data);
         $this->load->view('customer/enter_mobile_number');
         $this->load->view('customer/inc/footer');
@@ -86,7 +86,7 @@ class Customer extends CI_Controller
 
     public function view_verify_otp()
     {
-        $header_data['meta_title']='Sign In  | Bikrimart';
+        $header_data['meta_title'] = 'Sign In  | Bikrimart';
         $this->load->view('customer/inc/header_link', $header_data);
         $this->load->view('customer/otp');
         $this->load->view('customer/inc/footer');
@@ -112,64 +112,55 @@ class Customer extends CI_Controller
 
     public function view_add_name_address()
     {
-        if($this->is_user_logged_in()){
+        if ($this->is_user_logged_in()) {
             $header_data["meta_title"] = "Give Details | Bikrimart ";
             $this->load->view('customer/inc/header_link', $header_data);
             $this->load->view('customer/name_address');
             $this->load->view('customer/inc/footer');
             $this->load->view('customer/inc/footer_link');
             $this->load->view('customer/inc/custom_js/name_address_js');
-        }
-        else{
+        } else {
             redirect(base_url('customer/send_otp'));
         }
     }
 
     public function view_add_deliver_address()
     {
-        if($this->is_user_logged_in()){
+        if ($this->is_user_logged_in()) {
             $header_data["meta_title"] = "Address | Bikrimart ";
             $this->load->view('customer/inc/header_link', $header_data);
             $this->load->view('customer/add_deliver_address');
             $this->load->view('customer/inc/footer');
             $this->load->view('customer/inc/footer_link');
             $this->load->view('customer/inc/custom_js/delivery_address_js');
-
-        }
-        else{
+        } else {
             redirect(base_url('customer/send_otp'));
         }
-       
     }
 
     public function view_map()
     {
-        if($this->is_user_logged_in()){
+        if ($this->is_user_logged_in()) {
             $header_data["meta_title"] = "Address | Bikrimart ";
             $this->load->view('customer/inc/header_link', $header_data);
             $this->load->view('customer/map');
             $this->load->view('customer/inc/footer');
             $this->load->view('customer/inc/footer_link');
-
-        }
-        else{
+        } else {
             redirect(base_url('customer/send_otp'));
         }
-       
     }
 
     public function view_detail_deliver_address()
     {
-        if($this->is_user_logged_in()){
+        if ($this->is_user_logged_in()) {
             $header_data["meta_title"] = "Detail Address | Bikrimart ";
             $this->load->view('customer/inc/header_link', $header_data);
             $this->load->view('customer/change_deliver_address');
             $this->load->view('customer/inc/footer');
             $this->load->view('customer/inc/footer_link');
             $this->load->view('customer/inc/custom_js/delivery_address_js');
-
-        }
-        else{
+        } else {
             redirect(base_url('customer/send_otp'));
         }
     }
@@ -185,36 +176,24 @@ class Customer extends CI_Controller
         $this->load->view('customer/inc/footer');
         $this->load->view('customer/inc/footer_link');
         $this->load->view('customer/inc/custom_js/cart_js');
-        
     }
 
-    public function view_product_details($product_id){
-        $header_data['meta_title']='Product Details | Bikrimart';
-        // if($this->is_user_logged_in()){
+    public function view_product_details($product_id)
+    {
+        $header_data['meta_title'] = 'Product Details | Bikrimart';
 
-            $this->init_customer_model();
-            $vendor_id = $this->Customer_model->get_vendor_id_by_product_id($product_id);
-           
-            $data['product_details']= $this->Customer_model->display_product_details($product_id);
-            $data['product_images']= $this->Customer_model->display_product_image($product_id);
-            $data['other_products']=$this->Customer_model->display_other_products_of_vendor($vendor_id, $product_id);
+        $this->init_customer_model();
+        $vendor_id = $this->Customer_model->get_vendor_id_by_product_id($product_id);
+        $master_id = $this->Customer_model->get_master_id_by_product_id($product_id);
+        $brand_id = $this->Customer_model->get_brand_id_by_product_id($product_id);
 
-            $master_id = $this->Customer_model->get_master_id_by_product_id($product_id);
+        $data['vendor_id'] = $vendor_id;
+        $data['master_id'] = $master_id;
+        $data['product_details'] = $this->Customer_model->display_product_details($product_id);
+        $data['product_images'] = $this->Customer_model->display_product_image($product_id);
+        $data['other_products'] = $this->Customer_model->display_other_products_of_vendor($vendor_id, $product_id);
+        $data['list_vendors'] = $this->Customer_model->list_all_vendors($master_id, $brand_id);
 
-            $data['list_vendors'] = $this->Customer_model->list_all_vendors($master_id);
-
-            // echo"<pre>";
-            // print_r($data['list_vendors']);
-            // die();      
-        // }
-        // else{
-        //     $this->init_customer_model();
-        //     $vendor_id = $this->Customer_model->get_vendor_id_by_product_id($product_id);
-        //     $data['other_products']=$this->Customer_model->display_other_products_of_vendor($vendor_id, $product_id);
-        //     $data['product_details']= $this->Customer_model->display_product_details($product_id);
-        //     $data['product_images']=$this->Customer_model->display_product_image($product_id);
-        // }
-        
         $this->load->view('customer/inc/header_link', $header_data);
         $this->load->view('customer/inc/header');
         $this->load->view('customer/inc/sidebar');
@@ -222,12 +201,13 @@ class Customer extends CI_Controller
         $this->load->view('customer/inc/footer');
         $this->load->view('customer/inc/footer_link');
         $this->load->view('customer/inc/custom_js/cart_js');
+        // $this->load->view('customer/inc/custom_js/shop_js');
         $this->load->view('customer/inc/custom_js/product_details_js');
-
     }
 
 
-    public function view_store(){
+    public function view_store()
+    {
         $header_data["meta_title"] = "Store Wise | Bikrimart ";
 
         $this->load->view('customer/inc/header_link', $header_data);
@@ -238,10 +218,26 @@ class Customer extends CI_Controller
         $this->load->view('customer/inc/footer_link');
         $this->load->view('customer/inc/custom_js/cart_js');
         $this->load->view('customer/inc/custom_js/store_js');
-
     }
-    
-    public function view_restaurant(){
+
+    public function view_store_product($vendor_id)
+    {
+        $data['vendor_id'] = $vendor_id;
+
+        $header_data["meta_title"] = "Store Wise | Bikrimart ";
+
+        $this->load->view('customer/inc/header_link', $header_data);
+        $this->load->view('customer/inc/header');
+        $this->load->view('customer/inc/sidebar');
+        $this->load->view('customer/shop', $data);
+        $this->load->view('customer/inc/footer');
+        $this->load->view('customer/inc/footer_link');
+        $this->load->view('customer/inc/custom_js/cart_js');
+        // $this->load->view('customer/inc/custom_js/shop_js');
+    }
+
+    public function view_restaurant()
+    {
         $header_data["meta_title"] = "Restaurant | Bikrimart ";
 
         $this->load->view('customer/inc/header_link', $header_data);
@@ -301,7 +297,7 @@ class Customer extends CI_Controller
     {
         $mobile = $this->session->userdata('customer_mobile');
         $otp = $this->input->post(param_otp);
-        $session_id=$this->input->post('session_id');
+        $session_id = $this->input->post('session_id');
 
         if (!empty($mobile) || $mobile != null) {
             $this->init_customer_model();
@@ -345,21 +341,19 @@ class Customer extends CI_Controller
 
     public function display_product_for_shop()
     {
-        $user_id = $this->session->userdata('customer_id');   //  customer user_id
+        $vendor_id = $this->input->get(query_param_vendor_id);
+
+        $pageSize = ($this->input->get(query_param_page_size) != null) ? $this->input->get(query_param_page_size) : 10;
+        $pageNo = ($this->input->get(query_param_page_no) != null) ? $this->input->get(query_param_page_no) : 0;
+
         $this->init_customer_model();
-        $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
+        $result = $this->Customer_model->display_product_for_shop($vendor_id, $pageSize, $pageNo);
 
-        $data = $this->Customer_model->display_product_for_shop($customer_id);
-
-        // $data = $this->Customer_model->display_product_for_shop();
-
-        // foreach ($data as $i => $product) {
-        //     $master_id = $product->master_id;
-        //     $image[$i] = $this->Customer_model->get_product_image($master_id);
-        // }
+        $data = $result['data'];
+        $pagination_data = $result['pagination_data'];
 
         if (!empty($data)) {
-            $this->response(["success" => true, "message" => "found", "data" => $data,], 200);
+            $this->response(["success" => true, "message" => "found", "data" => $data, "pagination" => $pagination_data], 200);
         } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
@@ -372,7 +366,7 @@ class Customer extends CI_Controller
         $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
 
         if (!empty($user_id)) {
-            $data=$this->Customer_model->get_session_cart_products($session_id);
+            $data = $this->Customer_model->get_session_cart_products($session_id);
 
             if (!empty($data)) {
                 foreach ($data as $product) {
@@ -381,14 +375,13 @@ class Customer extends CI_Controller
                     $product_id = $product->product_id;
                     $product_qty = $product->product_qty;
                     $vendor_id = $product->vendor_id;
+                    $brand_id = $product->brand_id;
 
-                    $exist = $this->Customer_model->check_product_exist($customer_id, $product_id, $vendor_id, 'cart_items');
+                    $exist = $this->Customer_model->check_product_exist($customer_id, $product_id, $vendor_id, $brand_id, 'cart_items');
                     if ($exist) {
-                        $this->Customer_model->update_cart_item_from_session($cart_id, $customer_id, $product_id, $product_qty, $vendor_id);
-                        
+                        $this->Customer_model->update_cart_item_from_session($cart_id, $customer_id, $product_id, $product_qty, $vendor_id, $brand_id);
                     } else {
-                        $this->Customer_model->insert_cart_item_from_session($cart_id, $customer_id,  $master_id, $product_id, $product_qty, $vendor_id);
-                        
+                        $this->Customer_model->insert_cart_item_from_session($cart_id, $customer_id,  $master_id, $product_id, $product_qty, $vendor_id, $brand_id);
                     }
                 }
                 // unset($_SESSION['cart']);
@@ -405,14 +398,15 @@ class Customer extends CI_Controller
             $product_id = $this->input->post('product_id');
             $master_id = $this->input->post('master_id');
             $vendor_id = $this->input->post('vendor_id');
+            $brand_id = $this->input->post('brand_id');
 
             $this->init_customer_model();
             $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
 
             if (!empty($user_id)) {
-                $exist = $this->Customer_model->check_product_exist($customer_id, $product_id, $vendor_id, 'cart_items');
+                $exist = $this->Customer_model->check_product_exist($customer_id, $product_id, $vendor_id, $brand_id, 'cart_items');
                 if ($exist) {
-                    $update = $this->Customer_model->update_cart_item($customer_id, $product_id, $product_qty, $vendor_id);
+                    $update = $this->Customer_model->update_cart_item($customer_id, $product_id, $product_qty, $vendor_id, $brand_id);
                     if ($update) {
                         $this->response(["success" => true, "message" => "Product quantity updated"], 200);
                     } else {
@@ -421,7 +415,7 @@ class Customer extends CI_Controller
                 } else {
                     $this->init_uid_server_model();
                     $cart_id = $this->Uid_server_model->generate_uid(KEY_CART);
-                    $insert = $this->Customer_model->insert_cart_item($cart_id, $customer_id, $product_id, $master_id, $product_qty, $vendor_id);
+                    $insert = $this->Customer_model->insert_cart_item($cart_id, $customer_id, $product_id, $master_id, $product_qty, $vendor_id, $brand_id);
                     if ($insert) {
                         $this->response(["success" => true, "message" => "Product add to bag successfully"], 200);
                     } else {
@@ -436,30 +430,21 @@ class Customer extends CI_Controller
             $product_id = $this->input->post('product_id');
             $master_id = $this->input->post('master_id');
             $vendor_id = $this->input->post('vendor_id');
+            $brand_id = $this->input->post('brand_id');
 
             $session = $this->input->post('session_id');
 
-            if(empty($session) || $session ==''){
+            if (empty($session) || $session == '') {
                 $session_id = $this->Uid_server_model->generate_uid(KEY_SESSION);
-            }
-            else{
+            } else {
                 $session_id = $session;
             }
 
-
-            // $product_details = [
-            //     "uid" => $session_id,
-            //     "product_id" => $product_id,
-            //     "master_id" => $master_id,
-            //     "quantity" => $qty,
-            //     "vendor_id" => $vendor_id
-            // ];
-
             $this->init_customer_model();
 
-            $exist = $this->Customer_model->check_session_product_exist($session_id, $product_id, $vendor_id, 'session_cart_item');
+            $exist = $this->Customer_model->check_session_product_exist($session_id, $product_id, $vendor_id, $brand_id, 'session_cart_item');
             if ($exist) {
-                $update = $this->Customer_model->update_session_cart_item($session_id, $product_id, $product_qty, $vendor_id);
+                $update = $this->Customer_model->update_session_cart_item($session_id, $product_id, $product_qty, $vendor_id, $brand_id);
                 if ($update) {
                     $this->response(["success" => true, "message" => "Product quantity updated", "data" => $session_id], 200);
                 } else {
@@ -467,7 +452,7 @@ class Customer extends CI_Controller
                 }
             } else {
                 $cart_id = $this->Uid_server_model->generate_uid(KEY_CART);
-                $insert = $this->Customer_model->insert_session_cart_item($session_id, $cart_id, $product_id, $master_id, $product_qty, $vendor_id);
+                $insert = $this->Customer_model->insert_session_cart_item($session_id, $cart_id, $product_id, $master_id, $product_qty, $vendor_id, $brand_id);
                 if ($insert) {
                     $this->response(["success" => true, "message" => "Product add to bag successfully", "data" => $session_id], 200);
                 } else {
@@ -535,7 +520,7 @@ class Customer extends CI_Controller
         } else {
 
             $this->init_customer_model();
-            $session_id=$this->input->post('session_id');
+            $session_id = $this->input->post('session_id');
 
             $product = $this->Customer_model->get_session_product_default($session_id);
 
@@ -556,7 +541,6 @@ class Customer extends CI_Controller
             } else {
                 $this->response(["success" => false, "message" => "not found"], 200);
             }
-
         }
     }
 
@@ -601,8 +585,6 @@ class Customer extends CI_Controller
             } else {
                 $this->response(["success" => false, "message" => "not found"], 200);
             }
-
-           
         }
     }
 
@@ -634,21 +616,19 @@ class Customer extends CI_Controller
         if ($this->is_user_logged_in()) {
             $user_id = $this->session->userdata('customer_id');
             $this->init_customer_model();
-            $customer_id=$this->Customer_model->get_customer_id_by_user_id($user_id);
-            $exist=$this->Customer_model->is_user_exist($customer_id);
+            $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
+            $exist = $this->Customer_model->is_user_exist($customer_id);
 
-            if($exist){
+            if ($exist) {
                 $data = $this->Customer_model->get_customer_address($customer_id);
                 if (empty($data) || $data == null || $data == "") {
                     $this->response(["success" => false, "message" => "Address not found ! Give Your address details"], 200);
                 } else {
                     $this->response(["success" => true, "message" => "found", "data" => $data], 200);
                 }
-            }
-            else{
+            } else {
                 $this->response(["success" => false, "message" => "Address not found ! Give Your address details"], 200);
             }
-            
         } else {
             $this->response(["success" => false, "message" => "Address not found ! Give Your address details"], 200);
         }
@@ -689,20 +669,18 @@ class Customer extends CI_Controller
 
     public function get_user_cart_product_id()
     {
-        if($this->is_user_logged_in()){
+        if ($this->is_user_logged_in()) {
             $user_id = $this->session->userdata('customer_id');
             $this->init_customer_model();
             $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
             $data = $this->Customer_model->get_user_cart_product_id($customer_id);
             $this->response(["success" => true, "message" => "Details found", "data" => $data], 200);
-        }
-        else{
+        } else {
             $session_id = $this->input->post('session_id');
             $this->init_customer_model();
             $data = $this->Customer_model->get_user_session_cart_product_id($session_id);
             $this->response(["success" => true, "message" => "Details found", "data" => $data], 200);
         }
-       
     }
 
     public function delete_product_from_cart()
@@ -737,149 +715,143 @@ class Customer extends CI_Controller
         }
     }
 
-    public function add_deliver_address(){
-        $user_id=$this->session->userdata('customer_id');
-        $address=$this->input->post('address');
+    public function add_deliver_address()
+    {
+        $user_id = $this->session->userdata('customer_id');
+        $address = $this->input->post('address');
 
-        $lat=$this->input->post('lat');
-        $lng=$this->input->post('lng');
+        $lat = $this->input->post('lat');
+        $lng = $this->input->post('lng');
 
-        if(!empty($address)){
+        if (!empty($address)) {
             $this->init_customer_model();
-            $customer_id=$this->Customer_model->get_customer_id_by_user_id($user_id);
+            $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
             $this->init_uid_server_model();
-            $address_id=$this->Uid_server_model->generate_uid(KEY_ADDRESS);
-            $added=$this->Customer_model->save_user_address($address_id, $customer_id, $address, $lat, $lng);
-            if($added){
-                $this->response(["success" => true, "message" => "Your address is save successfully !", "redirect"=>base_url('customer/details')], 200);
-            }
-            else{
+            $address_id = $this->Uid_server_model->generate_uid(KEY_ADDRESS);
+            $added = $this->Customer_model->save_user_address($address_id, $customer_id, $address, $lat, $lng);
+            if ($added) {
+                $this->response(["success" => true, "message" => "Your address is save successfully !", "redirect" => base_url('customer/details')], 200);
+            } else {
                 $this->response(["success" => false, "message" => "Something went wrong"], 200);
             }
-        }
-        else{
+        } else {
             $this->response(["success" => false, "message" => "Add Delivery Address"], 200);
         }
     }
 
-    public function get_delivery_price(){
+    public function get_delivery_price()
+    {
         $vendor_id = $this->input->post('vendor_id');
         $this->init_customer_model();
-        $data=$this->Customer_model->get_delivery_price_of_vendor($vendor_id);
-        if(!empty($data)){
-            $this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-        }
-        else{
+        $data = $this->Customer_model->get_delivery_price_of_vendor($vendor_id);
+        if (!empty($data)) {
+            $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
 
-    public function display_delivery_details(){
+    public function display_delivery_details()
+    {
         if ($this->is_user_logged_in()) {
-            $user_id=$this->session->userdata('customer_id');
+            $user_id = $this->session->userdata('customer_id');
             $this->init_customer_model();
-            $customer_id=$this->Customer_model->get_customer_id_by_user_id($user_id);
-            $vendor=$this->Customer_model->get_vendor_id_by_customer_id($customer_id);
-            foreach($vendor as $i=> $vendor){
-                $vendor_id=$vendor->vendor_id;
-                $data[$i]=$this->Customer_model->display_delivery_details($vendor_id, 'cart_items');
+            $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
+            $vendor = $this->Customer_model->get_vendor_id_by_customer_id($customer_id);
+            foreach ($vendor as $i => $vendor) {
+                $vendor_id = $vendor->vendor_id;
+                $data[$i] = $this->Customer_model->display_delivery_details($vendor_id, 'cart_items');
             }
-            if(!empty($data)){
-                $this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-            }
-            else{
+            if (!empty($data)) {
+                $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+            } else {
                 $this->response(["success" => false, "message" => "not found"], 200);
             }
-        }
-        else{
+        } else {
             $session_id = $this->input->post('session_id');
             $this->init_customer_model();
-            $vendor=$this->Customer_model->get_vendor_id_by_session_id($session_id);
-            foreach($vendor as $i=> $vendor){
-                $vendor_id=$vendor->vendor_id;
-                $data[$i]=$this->Customer_model->display_delivery_details($vendor_id, 'session_cart_item');
+            $vendor = $this->Customer_model->get_vendor_id_by_session_id($session_id);
+            foreach ($vendor as $i => $vendor) {
+                $vendor_id = $vendor->vendor_id;
+                $data[$i] = $this->Customer_model->display_delivery_details($vendor_id, 'session_cart_item');
             }
-            if(!empty($data)){
-                $this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-            }
-            else{
+            if (!empty($data)) {
+                $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+            } else {
                 $this->response(["success" => false, "message" => "not found"], 200);
             }
         }
     }
 
-    public function save_detail_deliver_address(){
-        $user_id=$this->session->userdata('customer_id');
+    public function save_detail_deliver_address()
+    {
+        $user_id = $this->session->userdata('customer_id');
 
-        $area=$this->input->post('area');
-        $pincode=$this->input->post('pincode');
-        $house_number=$this->input->post('house_number');
-        $direction=$this->input->post('direction');
-        $landmark=$this->input->post('landmark');
-        $address_type=$this->input->post('address_type');
+        $area = $this->input->post('area');
+        $pincode = $this->input->post('pincode');
+        $house_number = $this->input->post('house_number');
+        $direction = $this->input->post('direction');
+        $landmark = $this->input->post('landmark');
+        $address_type = $this->input->post('address_type');
 
 
-        if(empty($area)){
+        if (empty($area)) {
             $this->response(["success" => false, "message" => "Enter Apartment/Road/Area"], 200);
             return;
         }
 
-        if(empty($pincode) && strlen($pincode)!=6){
+        if (empty($pincode) && strlen($pincode) != 6) {
             $this->response(["success" => false, "message" => "Enter Valid Pincode"], 200);
             return;
         }
-        if(empty($address_type)){
+        if (empty($address_type)) {
             $this->response(["success" => false, "message" => "Select Your Address Type"], 200);
             return;
         }
-        
-        $this->init_customer_model();
-        $customer_id=$this->Customer_model->get_customer_id_by_user_id($user_id);
 
-        $data=$this->Customer_model->save_detail_deliver_address($customer_id, $pincode, $area, $house_number, $direction, $landmark, $address_type);
-        if($data){
-            $this->response(["success" => true, "message" => "success", "redirect"=>base_url('shop')], 200); 
-        }
-        else{
+        $this->init_customer_model();
+        $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
+
+        $data = $this->Customer_model->save_detail_deliver_address($customer_id, $pincode, $area, $house_number, $direction, $landmark, $address_type);
+        if ($data) {
+            $this->response(["success" => true, "message" => "success", "redirect" => base_url('shop')], 200);
+        } else {
             $this->response(["success" => false, "message" => "Something went wrong"], 200);
         }
-        
-
-
-       
     }
 
-    public function get_detail_user_address(){
-        $user_id=$this->session->userdata('customer_id');
+    public function get_detail_user_address()
+    {
+        $user_id = $this->session->userdata('customer_id');
         $this->init_customer_model();
-        $customer_id=$this->Customer_model->get_customer_id_by_user_id($user_id);
-        $data=$this->Customer_model->get_detail_user_address($customer_id);
-        if($data){
-            $this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-        }
-        else{
+        $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
+        $data = $this->Customer_model->get_detail_user_address($customer_id);
+        if ($data) {
+            $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
 
-    public function get_deliver_schedule_time(){
+    public function get_deliver_schedule_time()
+    {
         $this->init_customer_model();
         $current_date = date('Y-m-d');
         $max_date = date('Y-m-d', strtotime('+7 days'));
         $current_time = date('H');
         $deliver_time = $current_time + 2;
 
-        $data=$this->Customer_model->get_today_deliver_schedule_time($deliver_time);
-    
-        if($data){
-            $this->response(["success" => true, "message" => "found", "date"=> $current_date, "max_date"=> $max_date, "data"=> $data, "time"=> $current_time], 200);
-        }
-        else{
+        $data = $this->Customer_model->get_today_deliver_schedule_time($deliver_time);
+
+        if ($data) {
+            $this->response(["success" => true, "message" => "found", "date" => $current_date, "max_date" => $max_date, "data" => $data, "time" => $current_time], 200);
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
 
-    public function get_deliver_time_accroding_date(){
+    public function get_deliver_time_accroding_date()
+    {
         $this->init_customer_model();
         $current_date = date('Y-m-d');
         $max_date = date('Y-m-d', strtotime('+7 days'));
@@ -888,75 +860,66 @@ class Customer extends CI_Controller
 
         $delivery_date = $this->input->post('delivery_date');
 
-        if($delivery_date==$current_date){
-            $data=$this->Customer_model->get_today_deliver_schedule_time($deliver_time);
+        if ($delivery_date == $current_date) {
+            $data = $this->Customer_model->get_today_deliver_schedule_time($deliver_time);
+        } else {
+            $data = $this->Customer_model->get_deliver_schedule_time();
         }
-        else{
-            $data=$this->Customer_model->get_deliver_schedule_time();
-           
-        }
-    
-        if($data){
-            $this->response(["success" => true, "message" => "found", "date"=> $current_date, "max_date"=> $max_date, "data"=> $data, "time"=> $deliver_time], 200);
-        }
-        else{
+
+        if ($data) {
+            $this->response(["success" => true, "message" => "found", "date" => $current_date, "max_date" => $max_date, "data" => $data, "time" => $deliver_time], 200);
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
 
-    public function display_location(){
+    public function display_location()
+    {
         $this->init_customer_model();
-        $data=$this->Customer_model->display_location();
-        if(!empty($data)){
-            $this->response(["success" => true, "message" => "found", "data"=> $data], 200);
-        }
-        else{
+        $data = $this->Customer_model->display_location();
+        if (!empty($data)) {
+            $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
 
-    public function check_customer_id_exist(){
+    public function check_customer_id_exist()
+    {
         $user_id = $this->session->userdata('customer_id');
         $this->init_customer_model();
         $customer_id = $this->Customer_model->get_customer_id_by_user_id($user_id);
         $status = $this->Customer_model->check_customer_id_exist($customer_id, 'customer_address');
-        if($status){
+        if ($status) {
             $this->response(["success" => true, "message" => "found"], 200);
-        }
-        else{
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
 
-    public function get_all_vendor_list(){
+    public function get_all_vendor_list()
+    {
         $category_id = $this->input->post(param_id);
+
         $this->init_customer_model();
-        $data=$this->Customer_model->get_all_vendor_list($category_id);
-        if(!empty($data)){
-            $this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-        }
-        else{
+        $data = $this->Customer_model->get_all_vendor_list($category_id);
+
+        if (!empty($data)) {
+            $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
 
-    public function get_vendor_product_list(){
+    public function get_vendor_product_list()
+    {
         $vendor_id = $this->input->post(param_id);
         $this->init_customer_model();
         $data = $this->Customer_model->get_vendor_product_list($vendor_id);
-        if(!empty($data)){
-            $this->response(["success" => true, "message" => "found", "data"=>$data], 200);
-        }
-        else{
+        if (!empty($data)) {
+            $this->response(["success" => true, "message" => "found", "data" => $data], 200);
+        } else {
             $this->response(["success" => false, "message" => "not found"], 200);
         }
     }
-
-    
-
-
-
-
-
-    
 }

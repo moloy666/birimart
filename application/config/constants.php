@@ -161,6 +161,7 @@ define('table_users','users');
 define('table_otp_list','otp_list');
 define('table_vendor','vendors');
 define('table_documents','documents');
+define('table_document_new','document');
 define('table_brand','brand');
 define('table_products', 'products');
 define('table_product_images', 'product_images');
@@ -194,6 +195,7 @@ define('param_category_level', 'category_level');
 define('const_user_type_vendor','user_vendor');
 define('const_deactive','DEACTIVE');
 define('const_active','ACTIVE');
+define('const_deleted','DELETED');
 define('const_otp_validate_time','otp_validate_time');
 
 define('const_google_api_key','AIzaSyDCx7UqFSWYeSjVzcXbgBKB5nnarnHZWoM');
@@ -227,3 +229,11 @@ define('header_allow_origin', 'Access-Control-Allow-Origin: *');
 define('header_allow_headers', 'Access-Control-Allow-Headers: *');
 define('header_allow_methods', "Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE, PATCH");
 /////////////////////////////////////////////////////////////////////////////////
+
+define('query_param_page_size', 'pageSize');
+define('query_param_page_no', 'pageNo');
+define('query_param_sort_by', 'sortBy');
+define('query_param_sort_dir', 'sortDir');
+define('query_param_vendor_id', 'vendorId');
+
+define('const_rupee_symbol', '₹');

@@ -433,6 +433,13 @@
 
 
     <div class="px-lg-3 mainwrp active">
+        <nav aria-label="breadcrumb " class="pt-3 Breadcumdesk">
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="<?= base_url() ?>">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url('shop') ?>">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><b>Product</b></li>
+            </ol>
+        </nav>
 
         <div class="grocerysec align-items-center">
             <div class="py-4 px-1 grpslide1 ">
@@ -463,13 +470,13 @@
                         <div class="col-4 pr-0 sh-mobile">
 
                             <div class="d-flex qtybox text-center">
-                                <button class="qtyboxbtn" type="button" onclick="dec(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>')">
+                                <button class="qtyboxbtn" type="button" onclick="dec(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>', '<?= $product['brand_id'] ?>')">
                                     <i class="fas fa-minus"></i>
                                 </button>
 
                                 <input type="text" value="0" class="text-center product_qty <?= "quantity_" . $product['product_id'] ?>">
 
-                                <button class="qtyboxbtn" onclick="inc(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>')">
+                                <button class="qtyboxbtn" onclick="inc(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>', '<?= $product['brand_id'] ?>')">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </div>
@@ -532,20 +539,20 @@
                         <div class="sh-desktop">
                             <div class="d-flex qtybox text-center mr-3">
 
-                                <button class="qtyboxbtn border-right" id="product_detail_dec_btn" onclick="dec(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>')">
+                                <button class="qtyboxbtn border-right" id="product_detail_dec_btn" onclick="dec(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>', '<?= $product['brand_id'] ?>')">
                                     <i class="fas fa-minus"></i>
                                 </button>
 
                                 <input type="text" name="dprcrt1" value="0" class="text-center product_qty <?= "quantity_" . $product['product_id'] ?>" disabled>
 
-                                <button class="qtyboxbtn" type="button" id="product_detail_inc_btn" onclick="inc(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>')">
+                                <button class="qtyboxbtn" type="button" id="product_detail_inc_btn" onclick="inc(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>', '<?= $product['brand_id'] ?>')">
                                     <i class="fas fa-plus"></i>
                                 </button>
 
                             </div>
                         </div>
 
-                        <button class="fxdaddtocart" type="button" onclick="buy_now(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>')" id="btn_buy_now">Buy Now</button>
+                        <button class="fxdaddtocart" type="button" onclick="buy_now(this, '<?= $product['sale_price'] ?>', '<?= $product['product_id'] ?>', '<?= $product['master_id'] ?>', '<?= $product['vendor_id'] ?>', '<?= $product['brand_id'] ?>')" id="btn_buy_now">Buy Now</button>
                     </div>
 
                 </div>
@@ -585,14 +592,17 @@
                 </div>
             </div>
 
-            <div>
-                <div class="card-body">
-                    <table class="table-bordered">
-                        <thead>
+            <div class="card-body" id=''>
+                <div>
+                    <input type="text" value="<?= $vendor_id ?>" id="checked_vendor_id">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Vendors</th>
-                                <th class="text-center">price</th>
+                                <th class="text-center">Store || Vendor </th>
+                                <th class="text-center">Price</th>
                                 <th class="text-center">Ratings</th>
                             </tr>
                         </thead>
@@ -602,14 +612,21 @@
                                 foreach ($list_vendors as $i => $val) {
                             ?>
                                     <tr>
-                                        <td><input type="radio" name="rank" value="<?= $val['vendor_id'] ?>" id="<?= $val['vendor_id'] ?>" <?= ($i == 0) ? "checked" : "" ?>></td>
-                                        <td class="title">
-                                            <label for="<?= $val['vendor_id'] ?>" style="cursor:pointer">
-                                                <?= $val['name'] ?>
+                                        <td class="text-center">
+                                            <input type="radio" class="" name="vendor_list" id="rb_<?= substr($val['vendor_id'], 7) ?>" value="<?= $val['vendor_id'] ?>" <?= ($vendor_id == $val['vendor_id']) ? "checked" : "" ?>>
+                                        </td>
+                                        <td class="text-center title">
+                                            <label for="rb_<?= substr($val['vendor_id'], 7) ?>" id="<?= substr($val['vendor_id'], 7) ?>" onclick="change_vendor_of_selected_product(this.id, '<?=substr($master_id, 15)?>')" style="cursor:pointer">
+                                                <div>
+                                                    <b><?= $val['store_name'] ?></b>
+                                                </div>
+                                                <div>
+                                                    <?= $val['name'] ?>
+                                                </div>
                                             </label>
                                         </td>
-                                        <td><?= $val['price'] ?></td>
-                                        <td><?= number_format($val['rating'], 1) ?></td>
+                                        <td class="text-center"><?= const_rupee_symbol . ' ' . $val['price'] ?></td>
+                                        <td class="text-center"><?= number_format($val['rating'], 1) ?></td>
                                     </tr>
                             <?php
                                 }
@@ -621,7 +638,7 @@
                     </table>
                 </div>
             </div>
-            
+
 
             <div class="popuprod mt-4 ">
                 <div class="d-flex align-items-center p-3 bg-light mb-3">

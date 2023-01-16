@@ -278,7 +278,8 @@ class Vendor extends CI_Controller
     }
 
 
-    public function fetch_product_details($uid){    #	( product_id ) ----------------fetch details of selected product
+    public function fetch_product_details($uid)
+    {    #	( product_id ) ----------------fetch details of selected product
 
         if ($this->is_user_logged_in()) {
 
@@ -539,7 +540,6 @@ class Vendor extends CI_Controller
                 $this->response(["success" => false, "message" => "Failed to add product", 'data' => $product_data], 200);
             }
         }
-       
     }
 
     public function add_product_when_already_exist(){    //--------------- Product exist in master table
@@ -862,13 +862,16 @@ class Vendor extends CI_Controller
         }
 
         $this->init_uid_server_model();
-        $document_id = $this->Uid_server_model->generate_uid(KEY_DOCUMENT);
+        // $document_id = $this->Uid_server_model->generate_uid(KEY_DOCUMENT);
         $this->init_vendor_model();
         $bussiness_name = $this->input->post('bussiness_name');
         $bussiness_mobile = $this->input->post('bussiness_mobile');
         $bussiness_email = $this->input->post('bussiness_email');
         $kyc_document = $this->input->post('kyc_document');
         $gst = $this->input->post('gst');
+        $building = $this->input->post('building');
+        $address = $this->input->post('address');
+
         $mobile = $this->session->userdata('mobile');
 
 
@@ -882,7 +885,19 @@ class Vendor extends CI_Controller
                 return;
             }
             $user_id = $this->Vendor_model->get_user_by_mobile($mobile);
-            $is_added = $this->Vendor_model->save_bussiness_details($document_id, $user_id, $bussiness_name, $bussiness_mobile, $bussiness_email, $gst, $kyc_document, $front_image, $inside_image, $kyc_image);
+
+            $documentNames=[$kyc_document, 'front_image', 'inside_image'];
+            $documentPath=[$kyc_image, $front_image, $inside_image];
+           
+            for($i=0; $i<3; $i++){
+                $document_data[$i]['uid']= $this->Uid_server_model->generate_uid(KEY_DOCUMENT);
+                $document_data[$i]['user_id']= $user_id;
+                $document_data[$i]['name']= $documentNames[$i];
+                $document_data[$i]['path']= $documentPath[$i];
+                $document_data[$i]['created_at']= date(field_date);
+            }
+           
+           $is_added = $this->Vendor_model->save_bussiness_details($user_id, $bussiness_name, $bussiness_mobile, $bussiness_email, $building, $address, $gst, $document_data);
             if ($is_added) {
                 $this->response(["success" => true, "message" => "Bussiness details save successfully"], 200);
             } else {
@@ -1091,7 +1106,8 @@ class Vendor extends CI_Controller
         }
     }
 
-    public function authenticate_user() {    # ------------------------------------ Login check user 
+    public function authenticate_user()
+    {    # ------------------------------------ Login check user 
         $mobile = $this->input->post(param_mobile);
         $otp = $this->input->post(param_otp);
         $this->init_vendor_model();
@@ -1148,7 +1164,8 @@ class Vendor extends CI_Controller
         redirect(base_url('vendor'));
     }
 
-    public function display_product(){    #--------------------- Display product details
+    public function display_product()
+    {    #--------------------- Display product details
         $vendor_id = $this->session->userdata('vendor_id');
         $this->init_vendor_model();
         $product_details = $this->Vendor_model->display_product($vendor_id);
@@ -1174,7 +1191,7 @@ class Vendor extends CI_Controller
         }
     }
 
-    public function add_product_image(){    #----------------- vendor add images of a product
+    public function add_product_image()   {    #----------------- vendor add images of a product
         $image = '';
         $path = 'assets/uploads/product_images/';
         if (!empty($_FILES['product_image'][param_name])) {
@@ -1397,15 +1414,26 @@ class Vendor extends CI_Controller
             $user_id = $this->Vendor_model->get_user_by_mobile($mobile);
 
 
-            $document_exist = $this->Vendor_model->check_user_id_exist($user_id);
-            if (empty($exist)) {
-                $this->init_uid_server_model();
-                $document_id = $this->Uid_server_model->generate_uid(KEY_DOCUMENT);
-            } else {
-                $document_id = $document_exist;
+            // $document_exist = $this->Vendor_model->check_user_id_exist($user_id);
+            // if (empty($exist)) {
+            //     $this->init_uid_server_model();
+            //     $document_id = $this->Uid_server_model->generate_uid(KEY_DOCUMENT);
+            // } else {
+            //     $document_id = $document_exist;
+            // }
+
+            $documentNames=['front_image', 'inside_image'];
+            $documentPath=[$front_image, $inside_image];
+           
+            for($i=0; $i<2; $i++){
+                $document_data[$i]['uid']= $this->Uid_server_model->generate_uid(KEY_DOCUMENT);
+                $document_data[$i]['user_id']= $user_id;
+                $document_data[$i]['name']= $documentNames[$i];
+                $document_data[$i]['path']= $documentPath[$i];
+                $document_data[$i]['created_at']= date(field_date);
             }
 
-            $added = $this->Vendor_model->save_image_details($document_id, $user_id, $inside_image, $front_image, $name, $email, $profile_image);
+            $added = $this->Vendor_model->save_image_details($user_id, $name, $email, $profile_image, $document_data);
             if ($added) {
                 $this->response(["success" => true, "message" => "Images save successfully"], 200);
             } else {
@@ -1842,8 +1870,7 @@ class Vendor extends CI_Controller
 
 
 
-    public function add_product_express()
-    {    //--------------- Add multiple products
+    public function add_product_express(){    //--------------- Add multiple products
 
         // print_r(array_merge($_POST, $_FILES));
         // die();
@@ -1962,29 +1989,25 @@ class Vendor extends CI_Controller
         }
     }
 
-    public function language(){
+    public function language()
+    {
         $apiKey = 'AIzaSyDCx7UqFSWYeSjVzcXbgBKB5nnarnHZWoM';
         $text = 'Hello world!';
         $url = 'https://www.googleapis.com/language/translate/v2?key=' . $apiKey . '&q=' . rawurlencode($text) . '&source=en&target=fr';
-    
+
         $handle = curl_init($url);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($handle);
         $responseDecoded = json_decode($response, true);
         $responseCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);      //Here we fetch the HTTP response code
         curl_close($handle);
-    
-        if($responseCode != 200) {
+
+        if ($responseCode != 200) {
             echo 'Fetching translation failed! Server response code:' . $responseCode . '<br>';
             echo 'Error description: ' . $responseDecoded['error']['errors'][0]['message'];
-        }
-        else {
+        } else {
             echo 'Source: ' . $text . '<br>';
             echo 'Translation: ' . $responseDecoded['data']['translations'][0]['translatedText'];
         }
     }
-    
-
-
-
 }

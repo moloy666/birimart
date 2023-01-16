@@ -135,39 +135,24 @@ class Vendor_model extends CI_Model
         $this->db->update(table_users, $data);
         return ($this->db->affected_rows() == 1 ? true : false);
     }
-    public function save_bussiness_details($document_id, $user_id, $bussiness_name, $bussiness_mobile, $bussiness_email, $gst, $kyc_document, $front_image, $inside_image, $kyc_image)
+    public function save_bussiness_details($user_id, $bussiness_name, $bussiness_mobile, $bussiness_email, $building, $address, $gst, $document_data)
     {
         $vendor_data = [
             "name" => $bussiness_name,
             "mobile" => $bussiness_mobile,
             "email" => $bussiness_email,
+            "building" => $building,
+            "address" => $address,
             "gst" => $gst,
             "modified_at" => date(field_date),
         ];
-        $document_data = [
-            "uid" => $document_id,
-            "user_id" => $user_id,
-            "kyc_document" => $kyc_document,
-            "kyc_image" => $kyc_image,
-            "inside_image" => $inside_image,
-            "front_image" => $front_image,
-            "created_at" => date(field_date),
-            "modified_at" => date(field_date),
-        ];
+
         $this->db->where('user_id', $user_id);
         $update = $this->db->update('vendors', $vendor_data);
         if ($update) {
-            $this->db->where('user_id', $user_id);
-            $this->db->get('documents');
-            $exist = $this->db->affected_rows();
-            if ($exist == 0) {
-                $this->db->insert('documents', $document_data);
-                return ($this->db->affected_rows() == 1 ? true : false);
-            } else {
-                $this->db->where('user_id', $user_id);
-                $this->db->update('documents', $document_data);
-                return ($this->db->affected_rows() == 1 ? true : false);
-            }
+            $this->db->insert_batch('document', $document_data);
+            return ($this->db->affected_rows() > 0 ? true : false);
+            
         }
     }
     public function save_bank_details($uid, $user_id, $profile_image, $account_name, $account_number, $ifsc, $upi)
@@ -555,25 +540,16 @@ class Vendor_model extends CI_Model
         $document_data = [
             "uid" => $document_id,
             "user_id" => $user_id,
-            "kyc_document" => $kyc_document,
-            "kyc_image" => $kyc_image,
+            "name" => $kyc_document,
+            "path" => $kyc_image,
             "created_at" => date(field_date),
-            "modified_at" => date(field_date),
         ];
         $this->db->where('user_id', $user_id);
         $update = $this->db->update('vendors', $vendor_data);
         if ($update) {
-            $this->db->where('user_id', $user_id);
-            $this->db->get('documents');
-            $exist = $this->db->affected_rows();
-            if ($exist == 0) {
-                $this->db->insert('documents', $document_data);
-                return ($this->db->affected_rows() == 1 ? true : false);
-            } else {
-                $this->db->where('user_id', $user_id);
-                $this->db->update('documents', $document_data);
-                return ($this->db->affected_rows() == 1 ? true : false);
-            }
+            $this->db->insert('document', $document_data);
+            return ($this->db->affected_rows() == 1 ? true : false);
+           
         }
     }
     //===============================================================
@@ -644,35 +620,20 @@ class Vendor_model extends CI_Model
         }
     }
 
-    public function save_image_details($document_id, $user_id, $inside_image, $front_image, $name, $email, $profile_image){
+    public function save_image_details($user_id, $name, $email, $profile_image, $document_data){
         $user_data = [
             field_name=>$name,
             field_email=>$email,
             field_profile_image => $profile_image,
             field_modified_at => date(field_date)
         ];
-        $document_data = [
-            field_uid => $document_id,
-            field_user_id => $user_id,
-            'inside_image' => $inside_image,
-            'front_image' => $front_image,
-            field_modified_at => date(field_date)
-        ];
-
+       
         $this->db->where(field_uid, $user_id);
         $update = $this->db->update(table_users, $user_data);
         if ($update) {
-            $this->db->where('user_id', $user_id);
-            $this->db->get('documents');
-            $row = $this->db->affected_rows();
-            if ($row == 0) {
-                $this->db->insert('documents', $document_data);
-                return ($this->db->affected_rows() == 1 ? true : false);
-            } else {
-                $this->db->where('user_id', $user_id);
-                $this->db->update('documents', $document_data);
-                return ($this->db->affected_rows() == 1 ? true : false);
-            }
+            $this->db->insert('document', $document_data);
+            return ($this->db->affected_rows() > 0 ? true : false);
+        
         }
     }
 
@@ -767,7 +728,7 @@ class Vendor_model extends CI_Model
             $data=[
                 'uid'=>$store_id,
                 'user_id'=>$user_id,
-                'vendor_id'=>$vendor_id,
+                'vendor_id'=>123,
                 'minimum_order_value'=>0,
                 'delivery_charges'=>0,
                 'free_delivery'=>'DEACTIVE',
